@@ -10,12 +10,12 @@ LOGUNLIMITED_BUILDER=logunlimited
 
 # Ubuntu 22.04
 deb-ubuntu2204: build-ubuntu2204
-	docker run --rm -v ./nginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist:/dist nginx-ubuntu2204 bash -c \
+	docker run --rm -v ./freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist:/dist nginx-ubuntu2204 bash -c \
 	"cp /src/*${PKG_VERSION}* /dist/"
-	sudo tar zcf nginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist.tar.gz ./nginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist/
+	sudo tar zcf freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist.tar.gz ./freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist/
 
 build-ubuntu2204: buildkit-logunlimited
-	sudo mkdir -p nginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist
+	sudo mkdir -p freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist
 	PKG_REL_DISTRIB=ubuntu22.04; \
 	(set -x; \
 	git config -l | sed -n '/^submodule\.[^.]*\.url/{s|^submodule\.||;s|\.url=|=|;p}' | sort; \
@@ -30,20 +30,20 @@ build-ubuntu2204: buildkit-logunlimited
 		--build-arg MODSECURITY_DEB_VERSION=${MOSECURITY_DEB_VERSION} \
 		--build-arg MODSECURITY_DEB_OS_ID=ubuntu22.04 \
 		-t nginx-ubuntu2204 . \
-	) 2>&1 | sudo tee nginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist/nginx_${PKG_VERSION}-${PKG_REL_PREFIX}${PKG_REL_DISTRIB}.build.log && \
-	sudo xz -z --force nginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist/nginx_${PKG_VERSION}-${PKG_REL_PREFIX}${PKG_REL_DISTRIB}.build.log
+	) 2>&1 | sudo tee freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist/nginx_${PKG_VERSION}-${PKG_REL_PREFIX}${PKG_REL_DISTRIB}.build.log && \
+	sudo xz -z --force freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}ubuntu22.04-dist/nginx_${PKG_VERSION}-${PKG_REL_PREFIX}${PKG_REL_DISTRIB}.build.log
 
 run-ubuntu2204:
 	docker run --rm -it nginx-ubuntu2204 bash
 
 # Debian 12
 deb-debian12: build-debian12
-	docker run --rm -v ./nginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist:/dist nginx-debian12 bash -c \
+	docker run --rm -v ./freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist:/dist nginx-debian12 bash -c \
 	"cp /src/*${PKG_VERSION}* /dist/"
-	sudo tar zcf nginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist.tar.gz ./nginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist/
+	sudo tar zcf freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist.tar.gz ./freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist/
 
 build-debian12: buildkit-logunlimited
-	sudo mkdir -p nginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist
+	sudo mkdir -p freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist
 	PKG_REL_DISTRIB=debian12; \
 	(set -x; \
 	git config -l | sed -n '/^submodule\.[^.]*\.url/{s|^submodule\.||;s|\.url=|=|;p}' | sort; \
@@ -58,8 +58,8 @@ build-debian12: buildkit-logunlimited
 		--build-arg MODSECURITY_DEB_VERSION=${MOSECURITY_DEB_VERSION} \
 		--build-arg MODSECURITY_DEB_OS_ID=debian12 \
 		-t nginx-debian12 . \
-	) 2>&1 | sudo tee nginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist/nginx_${PKG_VERSION}-${PKG_REL_PREFIX}${PKG_REL_DISTRIB}.build.log && \
-	sudo xz --force nginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist/nginx_${PKG_VERSION}-${PKG_REL_PREFIX}${PKG_REL_DISTRIB}.build.log
+	) 2>&1 | sudo tee freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist/nginx_${PKG_VERSION}-${PKG_REL_PREFIX}${PKG_REL_DISTRIB}.build.log && \
+	sudo xz --force freenginx-${PKG_VERSION}-${PKG_REL_PREFIX}debian12-dist/nginx_${PKG_VERSION}-${PKG_REL_PREFIX}${PKG_REL_DISTRIB}.build.log
 
 run-debian12:
 	docker run --rm -it nginx-debian12 bash
